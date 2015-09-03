@@ -8,9 +8,12 @@ vendor.add('lib')
 from flask import Flask, render_template, jsonify, request, url_for
 app = Flask(__name__)
 
+# For getting and parsing HTML
 from urllib import quote_plus
 from urllib2 import Request, urlopen
 from bs4 import BeautifulSoup
+
+subreddits = ["dankmemes", "circlejerk"]
 
 @app.route("/")
 def index_route():
@@ -33,27 +36,34 @@ def search_reddit_img(q):
 	# This is used to avoid repeated results.
 	hashes = set()
 
-	html = get_page("https://www.reddit.com/r/dankmemes/search?q=" + quote_plus(q) + "&restrict_sr=on&sort=relevance&t=all")
-	soup = BeautifulSoup(html, "html.parser")
-	anchors = soup.findAll('a')
-	for a in anchors:
-		# Get the URL from the anchor tag.
-		try:
-		    link = a['href']
-		except KeyError:
-		    continue
+	for subreddit in subreddits:
+		html = get_page("https://www.reddit.com/r/" + subreddit + "/search?q=" + quote_plus(q) + "&restrict_sr=on&sort=relevance&t=all")
+		soup = BeautifulSoup(html, "html.parser")
+		anchors = soup.findAll('a')
+		for a in anchors:
+			# Get the URL from the anchor tag.
+			try:
+			    link = a['href']
+			except KeyError:
+			    continue
 
-		# Only accept imgur links for now
-		if not link.startswith("http://i.imgur.com/"):
-			continue
+			# Only accept imgur links for now
+			is_img = link.startswith("http://i.imgur.com/")
+			is_link_to_img = link.startswith("http://imgur.com/")
+			if is_link_to_img:
+				link = "http://i.imgur.com/" + link[17:] + ".png"
+			elif is_img:
+				pass
+			else:
+				continue
 
-		# Discard repeated results.
-		h = hash(link)
-		if h in hashes:
-		    continue
-		hashes.add(h)
+			# Discard repeated results.
+			h = hash(link)
+			if h in hashes:
+			    continue
+			hashes.add(h)
 
-		yield link
+			yield link
 
 if __name__ == '__main__':
 	app.run()
