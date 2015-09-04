@@ -4,7 +4,7 @@ from urllib2 import Request, urlopen
 from bs4 import BeautifulSoup
 
 # Subreddits to search from
-subreddits = ["dankmemes", "circlejerk"]
+subreddits = ["dankmemes", "circlejerk", "redditarmie", "dank_meme", "shittyadviceanimals", "shittieradviceanimals", "Meme_Graveyard", "coaxedintoasnafu", "DadAdviceAnimals"]
 
 
 """
@@ -22,11 +22,12 @@ def get_page(url):
 """
 Get tags from various subreddits given a query.
 """
-def search_reddit_img(q):
+def search_reddit_img(q, limit=90):
 	# Set of hashes for the results found.
 	# This is used to avoid repeated results.
 	hashes = set()
 
+	count = 0
 	for subreddit in subreddits:
 		html = get_page("https://www.reddit.com/r/" + subreddit + "/search?q=" + quote_plus(q) + "&restrict_sr=on&sort=relevance&t=all")
 		soup = BeautifulSoup(html, "html.parser")
@@ -67,3 +68,8 @@ def search_reddit_img(q):
 				"link": link,
 				"title": title
 			}
+			count += 1
+			if count >= limit:
+				break
+		if count >= limit:
+			break

@@ -1,97 +1,105 @@
 <!DOCTYPE HTML>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<title>Dank Meme Browser</title>
-<meta name="description" content="A search engine dedicated to browsing dank memes">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/bootstrap-image-gallery.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/demo.css') }}">
+    <meta charset="utf-8">
+    <title>Dank Meme Browser</title>
+    <meta name="description" content="A search engine dedicated to browsing dank memes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/bootstrap-image-gallery.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/demo.css') }}">
 </head>
+
 <body>
-<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-fixed-top .navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://github.com/blueimp/Bootstrap-Image-Gallery">Dank Meme Broswer</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="https://github.com/blueimp/Bootstrap-Image-Gallery">Source Code</a></li>
-                <li><a href="https://blueimp.net">Pi Joules</a></li>
-            </ul>
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-fixed-top .navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://memebrowse.appspot.com/">Dank Meme Broswer</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="https://github.com/PiJoules/DankMemeBrowser">Source Code</a></li>
+                    <li><a href="https://github.com/PiJoules">Pi Joules</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
-<div class="container">
-    <h1>Dank Meme Browser</h1>
-    <p>
-        <form id="search" method="get" action="/">
-            <div class="row">
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="query" name="q" placeholder="rare pepe, Bernie Sanders, ayy lmao, etc." />
+    <div class="container">
+        <h1>Dank Meme Browser</h1>
+        <blockquote>
+            <p>A "search engine" dedicated for browsing the freshest dank memes you can procure.</p>
+        </blockquote>
+        <p>
+            <form id="search" method="get" action="/">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="query" name="q" placeholder="rare pepe, Bernie Sanders, ayy lmao, etc." />
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-default">Browse</button>
+                    </div>
                 </div>
-                <div class="col-sm-3">
-                    <button type="submit" class="btn btn-default">Browse</button>
-                </div>
-            </div>
-        </form>
-    </p>
-    <!-- The container for the list of example images -->
-    <div id="links">
-        {% for tag in tags %}
+            </form>
+        </p>
+        <!-- The container for the list of example images -->
+        <div id="links">
+            {% for tag in tags %}
             <a href="{{ tag.link }}" title="{{ tag.title }}" data-gallery>
                 <img style="width: 75px; height: 75px;" src="{{ tag.link }}" alt="{{ tag.title }}">
             </a>
-        {% endfor %}
+            {% endfor %}
+        </div>
+        <br>
     </div>
-    <br>
-</div>
-<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
-<div id="blueimp-gallery" class="blueimp-gallery">
-    <!-- The container for the modal slides -->
-    <div class="slides"></div>
-    <!-- Controls for the borderless lightbox -->
-    <h3 class="title"></h3>
-    <a class="prev">‹</a>
-    <a class="next">›</a>
-    <a class="close">×</a>
-    <a class="play-pause"></a>
-    <ol class="indicator"></ol>
-    <!-- The modal dialog, which will be used to wrap the lightbox content -->
-    <div class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body next"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left prev">
-                        <i class="glyphicon glyphicon-chevron-left"></i>
-                        Previous
-                    </button>
-                    <button type="button" class="btn btn-primary next">
-                        Next
-                        <i class="glyphicon glyphicon-chevron-right"></i>
-                    </button>
+    <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+    <div id="blueimp-gallery" class="blueimp-gallery">
+        <!-- The container for the modal slides -->
+        <div class="slides"></div>
+        <!-- Controls for the borderless lightbox -->
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+        <!-- The modal dialog, which will be used to wrap the lightbox content -->
+        <div class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body next"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left prev">
+                            <i class="glyphicon glyphicon-chevron-left"></i> Previous
+                        </button>
+                        <button type="button" class="btn btn-primary next">
+                            Next
+                            <i class="glyphicon glyphicon-chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<!-- Bootstrap JS is not required, but included for the responsive demo navigation and button states -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-<script src="{{ url_for('static', filename='scripts/bootstrap-image-gallery.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='scripts/index.js') }}"></script>
-</body> 
+
+    <!-- Scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/bootstrap-image-gallery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts/index.js') }}"></script>
+</body>
+
 </html>
